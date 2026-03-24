@@ -1,0 +1,2132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Citi Mobile | Accounts</title>
+    <style>
+      :root {
+        --app-max: 400px;
+        --s1: 8px;
+        --s2: 16px;
+        --s3: 24px;
+        --s4: 32px;
+        --s5: 40px;
+        --s6: 48px;
+        --radius-lg: 24px;
+        --radius-md: 16px;
+        --radius-sm: 12px;
+        --shadow: 0 20px 60px rgba(2, 6, 23, 0.22);
+        --shadow-sm: 0 12px 28px rgba(2, 6, 23, 0.14);
+        --text: #0f172a;
+        --muted: rgba(15, 23, 42, 0.72);
+        --muted-2: rgba(15, 23, 42, 0.56);
+        --line: rgba(15, 23, 42, 0.08);
+        --bg: #f3f5fb;
+        --card: #ffffff;
+        --blue-1: #0b5ed7;
+        --blue-2: #0a46b6;
+        --blue-3: #072f8a;
+        --green: #0a8a3a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: radial-gradient(1200px 800px at 10% 10%, rgba(11, 94, 215, 0.16), transparent 60%),
+          radial-gradient(900px 700px at 90% 20%, rgba(15, 23, 42, 0.14), transparent 55%),
+          linear-gradient(180deg, #eef2ff 0%, #f8fafc 60%, #f1f5f9 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .device {
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: none;
+        border: 0;
+        background: var(--bg);
+        position: relative;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .header {
+        background: radial-gradient(140% 120% at 20% 20%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 45%),
+          linear-gradient(180deg, var(--blue-1) 0%, var(--blue-2) 50%, var(--blue-3) 100%);
+        color: #ffffff;
+        padding-bottom: var(--s1);
+      }
+
+      .statusbar {
+        position: relative;
+        z-index: 11;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--s3) var(--s3) var(--s1);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .statusbar__icons {
+        display: flex;
+        align-items: center;
+        gap: var(--s1);
+      }
+
+      .sb-signal {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        width: 18px;
+        height: 12px;
+        opacity: 0.95;
+      }
+
+      .sb-signal span {
+        display: block;
+        flex: 1;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .sb-signal span:nth-child(1) {
+        height: 4px;
+        opacity: 0.6;
+      }
+
+      .sb-signal span:nth-child(2) {
+        height: 6px;
+        opacity: 0.72;
+      }
+
+      .sb-signal span:nth-child(3) {
+        height: 9px;
+        opacity: 0.84;
+      }
+
+      .sb-signal span:nth-child(4) {
+        height: 12px;
+      }
+
+      .sb-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 11px;
+      }
+
+      .sb-battery {
+        width: 26px;
+        height: 12px;
+        border-radius: 4px;
+        border: 1.5px solid rgba(255, 255, 255, 0.85);
+        position: relative;
+      }
+
+      .sb-battery::after {
+        content: "";
+        position: absolute;
+        right: -3px;
+        top: 3px;
+        width: 2px;
+        height: 6px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.85);
+      }
+
+      .sb-battery span {
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        bottom: 2px;
+        width: 62%;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .header__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--s2);
+        padding: 0 var(--s3) var(--s2);
+      }
+
+      .welcome {
+        min-width: 0;
+      }
+
+      .welcome__title {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        font-weight: 700;
+      }
+
+      .welcome__name {
+        margin-top: var(--s1);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .welcome__email {
+        margin-top: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.78);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 260px;
+      }
+
+      .header__icons {
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        flex: none;
+      }
+
+      .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.14);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .tabs {
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        padding: 0 var(--s3) var(--s2);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        flex: none;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.74);
+        padding: 0 0 var(--s1);
+        position: relative;
+        white-space: nowrap;
+      }
+
+      .tab--credit {
+        color: rgba(34, 197, 94, 0.98);
+      }
+
+      .tab.is-active {
+        color: rgba(255, 255, 255, 0.98);
+      }
+
+      .tab.is-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .fdic {
+        margin: 0 var(--s3) var(--s3);
+        padding: var(--s1) var(--s2);
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .fdic__badge {
+        flex: none;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        color: rgba(7, 47, 138, 0.96);
+      }
+
+      .balance {
+        margin: 0 var(--s3);
+      }
+
+      .balance__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+      }
+
+      .balance__acct {
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .pill {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.96);
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .balance__amount {
+        margin: var(--s2) 0 0;
+        font-size: 40px;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        font-weight: 700;
+      }
+
+      .balance__sub {
+        margin-top: var(--s1);
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      .balance__strip {
+        margin-top: var(--s2);
+        padding: var(--s1) var(--s2);
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.62);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+      }
+
+      .balance__deposit {
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(15, 23, 42, 0.82);
+      }
+
+      .balance__type {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: rgba(15, 23, 42, 0.62);
+      }
+
+      .alert {
+        margin: 0 var(--s3) var(--s1);
+        padding: var(--s2);
+        border-radius: var(--radius-md);
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.22);
+        display: flex;
+        align-items: flex-start;
+        gap: var(--s2);
+        color: rgba(185, 28, 28, 0.92);
+      }
+
+      .alert__icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        background: rgba(239, 68, 68, 0.16);
+        border: 1px solid rgba(239, 68, 68, 0.26);
+        font-weight: 800;
+      }
+
+      .alert__title {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+
+      .alert__desc {
+        margin-top: var(--s1);
+        font-size: 12px;
+        line-height: 1.35;
+        color: rgba(185, 28, 28, 0.78);
+      }
+
+      .alert__link {
+        color: rgba(185, 28, 28, 0.92);
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s3);
+        padding: var(--s3) var(--s3) var(--s6);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: var(--s1);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+      }
+
+      .actions::-webkit-scrollbar {
+        display: none;
+      }
+
+      .action {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--s1);
+        padding: var(--s2);
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 20px rgba(2, 6, 23, 0.06);
+        color: rgba(15, 23, 42, 0.92);
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .action__icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        background: rgba(11, 94, 215, 0.12);
+        color: rgba(10, 70, 182, 0.98);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .action__icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+      }
+
+      .card__pad {
+        padding: var(--s3);
+      }
+
+      .card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+        padding: var(--s3) var(--s3) var(--s2);
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .chev {
+        flex: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(15, 23, 42, 0.76);
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .promo-kicker {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-2);
+      }
+
+      .promo-head {
+        margin-top: var(--s1);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--s2);
+      }
+
+      .promo-brand {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .promo-close {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(15, 23, 42, 0.6);
+        flex: none;
+      }
+
+      .promo-close span {
+        font-size: 18px;
+        line-height: 1;
+        transform: translateY(-1px);
+      }
+
+      .promo-grid {
+        margin-top: var(--s2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s3);
+      }
+
+      .promo-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .promo-title {
+        margin: 0 0 var(--s1);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .promo-desc {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .btn {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--s2) var(--s3);
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(11, 94, 215, 0.22);
+        background: linear-gradient(180deg, rgba(11, 94, 215, 0.96) 0%, rgba(10, 70, 182, 0.98) 100%);
+        color: rgba(255, 255, 255, 0.98);
+        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 0 12px 26px rgba(11, 94, 215, 0.24);
+        white-space: nowrap;
+      }
+
+      .btn--full {
+        width: 100%;
+      }
+
+      .list {
+        padding: 0 var(--s3) var(--s2);
+      }
+
+      .tx {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--s2);
+        padding: var(--s2) 0;
+        border-top: 1px solid rgba(15, 23, 42, 0.07);
+      }
+
+      .tx:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .tx__title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: rgba(10, 138, 58, 0.92);
+      }
+
+      .tx__meta {
+        margin-top: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(10, 138, 58, 0.68);
+      }
+
+      .tx__right {
+        text-align: right;
+        flex: none;
+        min-width: 96px;
+      }
+
+      .tx__amount {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: rgba(10, 138, 58, 0.98);
+      }
+
+      .tx__amount.is-negative {
+        color: rgba(10, 138, 58, 0.98);
+      }
+
+      .tx__status {
+        margin-top: 2px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(10, 138, 58, 0.72);
+      }
+
+      .tx--link {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      .tx--link:hover {
+        background: rgba(10, 138, 58, 0.06);
+      }
+
+      .tx--link:active {
+        background: rgba(10, 138, 58, 0.1);
+      }
+
+      .history-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+        padding: var(--s3) var(--s3) var(--s2);
+      }
+
+      .select {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--s1);
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 20px rgba(2, 6, 23, 0.06);
+        position: relative;
+      }
+
+      .select label {
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.72);
+      }
+
+      .select select {
+        border: 0;
+        outline: none;
+        background: transparent;
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.86);
+        appearance: none;
+        padding-right: 18px;
+      }
+
+      .select::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-45%) rotate(45deg);
+        width: 7px;
+        height: 7px;
+        border-right: 2px solid rgba(15, 23, 42, 0.5);
+        border-bottom: 2px solid rgba(15, 23, 42, 0.5);
+        pointer-events: none;
+      }
+
+      .nav {
+        position: sticky;
+        bottom: 0;
+        z-index: 12;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(15, 23, 42, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--s2) var(--s2) calc(var(--s2) + env(safe-area-inset-bottom));
+      }
+
+      .nav__item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.55);
+      }
+
+      .nav__item svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .nav__item.is-active {
+        color: rgba(11, 94, 215, 0.98);
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: var(--s3);
+        z-index: 80;
+      }
+
+      .modal:target {
+        display: flex;
+      }
+
+      .modal__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.58);
+      }
+
+      .modal__dialog {
+        position: relative;
+        width: 100%;
+        max-width: 360px;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 28px 70px rgba(2, 6, 23, 0.35);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+      }
+
+      .modal__pad {
+        padding: var(--s3);
+      }
+
+      .modal__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s2);
+      }
+
+      .modal__close {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        color: rgba(15, 23, 42, 0.7);
+        background: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .modal__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(239, 68, 68, 0.12);
+        color: rgba(185, 28, 28, 0.95);
+        font-weight: 800;
+        font-size: 18px;
+      }
+
+      .modal__icon--success {
+        background: rgba(34, 197, 94, 0.14);
+        color: rgba(10, 138, 58, 0.95);
+      }
+
+      .modal__title {
+        margin: var(--s2) 0 0;
+        font-size: 18px;
+        letter-spacing: -0.02em;
+        color: rgba(15, 23, 42, 0.94);
+      }
+
+      .modal__desc {
+        margin: var(--s1) 0 0;
+        font-size: 13px;
+        line-height: 1.45;
+        color: rgba(15, 23, 42, 0.7);
+      }
+
+      .receipt__amount {
+        margin-top: var(--s2);
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: rgba(10, 138, 58, 0.98);
+      }
+
+      .receipt__sub {
+        margin-top: var(--s1);
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(10, 138, 58, 0.78);
+      }
+
+      .kv {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--s2);
+        padding: var(--s2) 0;
+        border-top: 1px solid rgba(15, 23, 42, 0.08);
+      }
+
+      .kv:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .kv__k {
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.52);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .kv__v {
+        text-align: right;
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(15, 23, 42, 0.9);
+      }
+
+      @media (min-width: 560px) {
+        .shell {
+          align-items: center;
+          padding: var(--s4);
+        }
+
+        .device {
+          max-width: var(--app-max);
+          min-height: auto;
+          border-radius: 40px;
+          box-shadow: var(--shadow);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="modal" id="blocked">
+      <a class="modal__backdrop" href="#app" aria-label="Close warning"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Account temporarily frozen warning">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon" aria-hidden="true">!</div>
+            <a class="modal__close" href="#app" aria-label="Close">&times;</a>
+          </div>
+          <h2 class="modal__title">Account Temporarily frozen</h2>
+          <p class="modal__desc">
+            This feature is unavailable because your account is temporarily frozen. Please contact support to regain access
+          </p>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#app">OK</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20250720">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for initial deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$250,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Initial Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">20/07/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Branch Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">RCPT-20250720-1042</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20250722">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for initial deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$250,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Initial Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">22/07/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Branch Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">RCPT-20250722-1187</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20220801">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for incoming wire deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$90,000,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Incoming Wire Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">01/08/2022</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Incoming Wire</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">WIRE-20220801-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20250905">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/09/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20250905-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20250930">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$52</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">30/09/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20250930-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251005">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/10/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20251005-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251031">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$53</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">31/10/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20251031-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251105">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/11/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20251105-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251130">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$54</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">30/11/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20251130-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251205">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/12/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20251205-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251231-int">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$55</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">31/12/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20251231-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20251231-fee">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for account maintenance fee">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">-$25</div>
+          <div class="receipt__sub">Posted &bull; Debit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Account Maintenance Fee</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">31/12/2025</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Payee</div>
+              <div class="kv__v">Citibank N.A.</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">FEE-20251231-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260105">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/01/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20260105-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260115">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for service charge">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">-$15</div>
+          <div class="receipt__sub">Posted &bull; Debit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Service Charge</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">15/01/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Payee</div>
+              <div class="kv__v">Citibank N.A.</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">CHG-20260115-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260131">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$56</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">31/01/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20260131-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260205">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for monthly deposit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$1,500,000</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Monthly Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">05/02/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Method</div>
+              <div class="kv__v">Direct Deposit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">ACH-20260205-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260218">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for service charge">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">-$16</div>
+          <div class="receipt__sub">Posted &bull; Debit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Service Charge</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">18/02/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Payee</div>
+              <div class="kv__v">Citibank N.A.</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">CHG-20260218-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="r-20260228">
+      <a class="modal__backdrop" href="#history" aria-label="Close receipt"></a>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Receipt for interest credit">
+        <div class="modal__pad">
+          <div class="modal__top">
+            <div class="modal__icon modal__icon--success" aria-hidden="true">&#10003;</div>
+            <a class="modal__close" href="#history" aria-label="Close">&times;</a>
+          </div>
+          <div class="modal__title">Receipt</div>
+          <div class="receipt__amount">$80</div>
+          <div class="receipt__sub">Posted &bull; Credit</div>
+          <div style="margin-top: var(--s3)">
+            <div class="kv">
+              <div class="kv__k">Transaction</div>
+              <div class="kv__v">Interest Credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Date</div>
+              <div class="kv__v">28/02/2026</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Account</div>
+              <div class="kv__v">Checking-5271</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Description</div>
+              <div class="kv__v">Monthly interest credit</div>
+            </div>
+            <div class="kv">
+              <div class="kv__k">Reference</div>
+              <div class="kv__v">INT-20260228-5271</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--s3)">
+            <a class="btn btn--full" href="#history">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div class="device" id="app">
+        <header class="header">
+          <div class="header__top">
+            <div class="welcome">
+              <h1 class="welcome__title">Welcome</h1>
+              <div class="welcome__name">CORNELIS VAN KAAM</div>
+              <div class="welcome__email">zakencvk1964@gmail.com</div>
+            </div>
+
+            <div class="header__icons" aria-label="Header actions">
+              <a class="icon-btn" href="profile.html" aria-label="Profile">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M12 12a4.2 4.2 0 1 0-4.2-4.2A4.2 4.2 0 0 0 12 12Zm0 2.2c-4.3 0-7.8 2.1-7.8 4.8 0 1 1 1.8 2.3 1.8h11c1.3 0 2.3-.8 2.3-1.8 0-2.7-3.5-4.8-7.8-4.8Z"
+                    fill="currentColor"
+                    opacity="0.95"
+                  />
+                </svg>
+              </a>
+              <a class="icon-btn" href="payments.html" aria-label="Payments">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M20 7.2v9.6c0 1.2-1 2.2-2.2 2.2H6.2C5 19 4 18 4 16.8V7.2C4 6 5 5 6.2 5h11.6C19 5 20 6 20 7.2Zm-1.8 1H5.8v8.6c0 .2.2.4.4.4h11.6c.2 0 .4-.2.4-.4V8.2Z"
+                    fill="currentColor"
+                    opacity="0.95"
+                  />
+                  <path d="M7 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.95" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <nav class="tabs" aria-label="Primary">
+            <a class="tab" href="#">My Citi</a>
+            <a class="tab is-active" href="#">Banking</a>
+            <a class="tab tab--credit" href="#">Credit Cards</a>
+            <a class="tab" href="#">Loans</a>
+            <a class="tab" href="#">Invest</a>
+          </nav>
+
+          <div class="fdic" aria-label="FDIC notice">
+            <div class="fdic__badge">FDIC</div>
+            <div>FDIC-insured &mdash; Backed by the full faith and credit of the U.S. Government</div>
+          </div>
+
+          <section class="balance" aria-label="Checking balance">
+            <div class="balance__row">
+              <div class="balance__acct">Checking-5271</div>
+              <a class="pill" href="#blocked">Account Info</a>
+            </div>
+            <div class="balance__amount">$99,500,294</div>
+            <div class="balance__sub">Available Now</div>
+            <div class="balance__strip" aria-label="Deposit and account type">
+              <div class="balance__deposit">On Deposit: $5,327.48</div>
+              <div class="balance__type">CHECKING</div>
+            </div>
+          </section>
+        </header>
+
+        <main class="main">
+          <section class="alert" aria-label="Account status">
+            <div class="alert__icon" aria-hidden="true">!</div>
+            <div>
+              <div class="alert__title">Account Temporarily frozen</div>
+              <div class="alert__desc">
+                Some features are unavailable because your account is temporarily frozen.
+                <a class="alert__link" href="#blocked">Learn more</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="actions" aria-label="Quick actions">
+            <a class="action" href="services.html" aria-label="More actions">
+              <span class="action__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 12.2a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Zm6 0a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Zm6 0a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span>More</span>
+            </a>
+
+            <a class="action" href="lock-card.html">
+              <span class="action__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M17 10V8.2a5 5 0 1 0-10 0V10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.4 10H16.6c1 0 1.8.8 1.8 1.8v6c0 1-.8 1.8-1.8 1.8H7.4c-1 0-1.8-.8-1.8-1.8v-6c0-1 .8-1.8 1.8-1.8Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span>Lock Card</span>
+            </a>
+
+            <a class="action" href="services.html#statements">
+              <span class="action__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 4h7l3 3v13c0 1-1 2-2 2H7c-1 0-2-1-2-2V6c0-1 1-2 2-2Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+                </svg>
+              </span>
+              <span>Statements</span>
+            </a>
+
+            <a class="action" href="zelle.html">
+              <span class="action__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 7.6A3.6 3.6 0 0 1 9.6 4h4.8A3.6 3.6 0 0 1 18 7.6v4.8A3.6 3.6 0 0 1 14.4 16H9.6A3.6 3.6 0 0 1 6 12.4V7.6Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path d="M9 10.5h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M9 13.5h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+                </svg>
+              </span>
+              <span>Zelle</span>
+            </a>
+
+            <a class="action" href="services.html#find">
+              <span class="action__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M20 20l-3.4-3.4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span>Find</span>
+            </a>
+          </section>
+
+          <section class="card" aria-label="Promotional offer">
+            <div class="card__pad">
+              <div class="promo-kicker">Empower your plans</div>
+              <div class="promo-head">
+                <div class="promo-brand">Citi<sup>&reg;</sup> Personal Loan</div>
+                <a class="promo-close" href="#" aria-label="Dismiss">
+                  <span aria-hidden="true">&times;</span>
+                </a>
+              </div>
+
+              <div class="promo-grid">
+                <div class="promo-copy">
+                  <div class="promo-title">Zero Fees</div>
+                  <p class="promo-desc">Fixed Rate | Up to $50,000</p>
+                </div>
+                <a class="btn" href="#blocked">Check My Rate</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" aria-label="Recent transactions">
+            <div class="card-head">
+              <h2 class="card-title">Transactions</h2>
+              <a class="chev" href="#history" aria-label="View history">&#8250;</a>
+            </div>
+            <div class="list" role="list">
+              <a class="tx tx--link" role="listitem" href="#r-20260205">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260228">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">28/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$80</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260218">
+                <div>
+                  <div class="tx__title">Service Charge</div>
+                  <div class="tx__meta">18/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount is-negative">-$16</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <section class="card" id="history" aria-label="Transaction history">
+            <div class="history-top">
+              <h2 class="card-title">Transaction History</h2>
+              <div class="select" aria-label="Month selector">
+                <label for="month">Month</label>
+                <select id="month" name="month">
+                  <option selected>All</option>
+                  <option>August 2022</option>
+                  <option>July 2025</option>
+                  <option>August 2025</option>
+                  <option>September 2025</option>
+                  <option>October 2025</option>
+                  <option>November 2025</option>
+                  <option>December 2025</option>
+                  <option>January 2026</option>
+                  <option>February 2026</option>
+                </select>
+              </div>
+            </div>
+            <div class="list" role="list">
+              <a class="tx tx--link" role="listitem" href="#r-20220801">
+                <div>
+                  <div class="tx__title">Incoming Wire Deposit</div>
+                  <div class="tx__meta">01/08/2022</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$90,000,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20250720">
+                <div>
+                  <div class="tx__title">Initial Deposit</div>
+                  <div class="tx__meta">20/07/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$250,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20250722">
+                <div>
+                  <div class="tx__title">Initial Deposit</div>
+                  <div class="tx__meta">22/07/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$250,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20250905">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/09/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20250930">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">30/09/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$52</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251005">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/10/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251031">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">31/10/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$53</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251105">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/11/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251130">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">30/11/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$54</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251205">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/12/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251231-int">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">31/12/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$55</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20251231-fee">
+                <div>
+                  <div class="tx__title">Account Maintenance Fee</div>
+                  <div class="tx__meta">31/12/2025</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount is-negative">-$25</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260105">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/01/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260115">
+                <div>
+                  <div class="tx__title">Service Charge</div>
+                  <div class="tx__meta">15/01/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount is-negative">-$15</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260131">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">31/01/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$56</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260205">
+                <div>
+                  <div class="tx__title">Monthly Deposit</div>
+                  <div class="tx__meta">05/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$1,500,000</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260218">
+                <div>
+                  <div class="tx__title">Service Charge</div>
+                  <div class="tx__meta">18/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount is-negative">-$16</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+              <a class="tx tx--link" role="listitem" href="#r-20260228">
+                <div>
+                  <div class="tx__title">Interest Credit</div>
+                  <div class="tx__meta">28/02/2026</div>
+                </div>
+                <div class="tx__right">
+                  <div class="tx__amount">$80</div>
+                  <div class="tx__status">Posted</div>
+                </div>
+              </a>
+            </div>
+          </section>
+        </main>
+
+        <nav class="nav" aria-label="Bottom navigation">
+          <a class="nav__item is-active" href="blank.html" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M7 4h10c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M8 9h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.9" />
+              <path d="M8 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7" />
+            </svg>
+            <span>Accounts</span>
+          </a>
+          <a class="nav__item" href="payments.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M20 7.2v9.6c0 1.2-1 2.2-2.2 2.2H6.2C5 19 4 18 4 16.8V7.2C4 6 5 5 6.2 5h11.6C19 5 20 6 20 7.2Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.85" />
+            </svg>
+            <span>Payments</span>
+          </a>
+          <a class="nav__item" href="services.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 17.3l-1.9 1c-.6.3-1.3-.2-1.2-.9l.4-2.1-1.5-1.5c-.5-.5-.2-1.3.5-1.4l2.1-.3.9-1.9c.3-.6 1.2-.6 1.5 0l.9 1.9 2.1.3c.7.1 1 .9.5 1.4l-1.5 1.5.4 2.1c.1.7-.6 1.2-1.2.9l-1.9-1Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <path d="M6 21h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+            </svg>
+            <span>Services</span>
+          </a>
+          <a class="nav__item" href="profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4.2 4.2 0 1 0-4.2-4.2A4.2 4.2 0 0 0 12 12Zm0 2.2c-4.3 0-7.8 2.1-7.8 4.8 0 1 1 1.8 2.3 1.8h11c1.3 0 2.3-.8 2.3-1.8 0-2.7-3.5-4.8-7.8-4.8Z"
+                fill="currentColor"
+                opacity="0.9"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>
